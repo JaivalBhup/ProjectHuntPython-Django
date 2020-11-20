@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if error %}
+{{ error }}
+{% endif %}
+<div class="container"><h1><img id="logo" height="40" width="40" src="{% static 'contract.png' %}" class="d-inline-block-align-top"/>Login</h1></div>
+<div class="container">
+<form method="post" action="{% url 'login' %}" >
+    {% csrf_token %}
+    UserName: <br>
+    <input type="text" name = "uname"><br>
+    Password:<br>
+    <input type="password" name = "pass"><br>
+    <input class= "btn btn-primary" type="submit" name ="submit" value="submit">
+</form>
+</div>
+
+{% endblock %}

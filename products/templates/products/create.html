@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container"><h1><img id="logo" height="40" width="40" src="{% static 'contract.png' %}" class="d-inline-block-align-top"/>Create Your Project</h1></div>
+<div class="container">
+<form method="post" action="{% url 'create' %}" >
+    {% csrf_token %}
+    Title of your project:
+    <input type="text" name = "title" required><br>
+    Your project proposal:
+    <textarea name="body" placeholder="What can your project do" required></textarea><br>
+    Most preferable language:
+    <input type="text" name="reqLang" required><br>
+    Special frameworks:
+    <input type="text" name="spf" value="None" required><br>
+    <br>
+    Select a icon for your project:
+    <label><input type="radio" value="{% static 'coding.png' %}" name = "icon"><img src="{% static 'coding.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'des.png' %}" name = "icon"><img src="{% static 'des.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'j.png' %}" name = "icon"><img src="{% static 'j.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'jav.png' %}" name = "icon"><img src="{% static 'jav.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'java.png' %}" name = "icon"><img src="{% static 'java.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'javascript.png' %}" name = "icon"><img src="{% static 'javascript.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'logo.png' %}" name = "icon"><img src="{% static 'logo.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'monitor.png' %}" name = "icon"><img src="{% static 'monitor.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'py.png' %}" name = "icon"><img src="{% static 'py.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'python.png' %}" name = "icon"><img src="{% static 'python.png' %}" height="30" width="30"></label>
+<label><input type="radio" value="{% static 'ui.png' %}" name = "icon"><img src="{% static 'ui.png' %}" height="30" width="30"></label><br>
+    <input class= "btn btn-primary" type="submit" name ="submit" value="Post">
+</form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="blog-post">
+        <h2 class="blog-post-title">{{project.title}}</h2>
+        <p class="blog-post-meta">{{project.pub_date}} haunted by <a href="#">{{project.user}}</a></p>
+
+        <p>Main Idea: <br>{{project.body}}</p>
+        <blockquote>
+          <p>Language requirement :<strong>{{project.req_langs}}</strong> </p>
+        </blockquote>
+        <blockquote>
+          <p>Special Frameworks :<strong>{{project.sp_framework}}</strong> </p>
+        </blockquote>
+      </div>
+    <nav class="blog-pagination">
+        <p><strong>Total Votes :{{project.total_votes}}</strong> </p>
+        {% if votedProject != '' %}
+            <a class="btn btn-primary" href="javascript:{document.getElementById('downvote').submit()}">Upvoted {{project.total_votes}}</a>
+        {% else %}
+            <a class="btn btn-outline-primary" href="javascript:{document.getElementById('upvote').submit()}">Upvote {{project.total_votes}}</a>
+        {% endif %}
+    </nav>
+
+<form method="post" action="{% url 'upvote2' project.id %}" id = 'upvote'>
+    {% csrf_token %}
+    <input type="hidden">
+  </form>
+<form method="post" action="{% url 'downvote2' project.id %}" id = 'downvote'>
+    {% csrf_token %}
+    <input type="hidden">
+  </form>
+{% endblock %}

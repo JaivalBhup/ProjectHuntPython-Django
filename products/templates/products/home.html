@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+        <br>
+        <br>
+<h1 class="display-4">Welcome {{user.username}}</h1>
+ <br>
+<br>
+<form action="{% url 'search' %}" method="post">
+    {% csrf_token %}
+  <div class="form-row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Search for a project" name="keyword">
+    </div>
+    <div class="col">
+      <input class= "btn btn-primary" type="submit" value="Search" name ="submit">
+    </div>
+  </div>
+</form>
+{% endif %}
+<br>
+<main role="main" class="container">
+
+<div class="row">
+<div class="col-md-8 blog-main">
+{% for project in projects%}
+    <div>
+
+           <br>
+        <br>
+        <br>
+        <svg class="bd-placeholder-img rounded-circle" width="20" height="10"  focusable="false" role="img" aria-label="Placeholder: 140x140"><img class="img-fluid" height="200" width="200" src="{{project.icon}}"></svg>
+        <h2>{{project.title}}</h2>
+        <p>{{project.body}}</p>
+        {% if user.is_authenticated %}
+          {% if project.id in votedProjects %}
+                    <a class="btn btn-primary" href="javascript:{document.getElementById('downvote{{project.id}}').submit()}">Upvoted {{project.total_votes}}</a>
+          {% else%}
+                    <a class="btn btn-outline-primary" href="javascript:{document.getElementById('upvote{{project.id}}').submit()}">Upvote {{project.total_votes}}</a>
+          {% endif %}
+          <a class="btn btn-outline-secondary" href="{%url 'detail' project.id%}" tabindex="-1" aria-disabled="true">Show More&raquo;</a>
+          {% else %}
+
+          <a class="btn btn-outline-primary" href="{% url 'signup'%}">Upvote {{project.total_votes}}</a>
+          <a class="btn btn-outline-secondary" href="{% url 'signup'%}" tabindex="-1" aria-disabled="true">Show More&raquo;</a>
+
+        {% endif %}
+      </div>
+  <form method="post" action="{% url 'upvote1' project.id %}" id = 'upvote{{project.id}}'>
+    {% csrf_token %}
+    <input type="hidden">
+  </form>
+     <form method="post" action="{% url 'downvote1' project.id %}" id = 'downvote{{project.id}}'>
+    {% csrf_token %}
+    <input type="hidden">
+  </form>
+{% endfor %}
+{% if user.is_authenticated %}
+</div>
+    <aside class="col-md-3 blog-sidebar">
+      <div class="p-4 mb-2 bg-light rounded">
+          <a class="nav-item nav-link" href="#">Voted By Me</a><br>
+          <a class="nav-item nav-link" href="#">My Projects</a><br>
+       </div>
+    </aside>
+</div>
+    {% endif %}
+</main>
+
+
+{% endblock %}
